@@ -1,0 +1,135 @@
+[gd_scene load_steps=9 format=3 uid="uid://bhi2bpi2g80nv"]
+
+[ext_resource type="Texture2D" uid="uid://dsjg8rdncukan" path="res://assets/sprites/campo-roxo.png" id="1_h816s"]
+[ext_resource type="Texture2D" uid="uid://d4cb84slbtgek" path="res://assets/sprites/jogador.png" id="2_q5sgf"]
+[ext_resource type="FontFile" uid="uid://cob6dpeq1k74k" path="res://assets/fonte/PublicPixel-z84yD.ttf" id="3_of7w6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_77ww1"]
+size = Vector2(20, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7tfev"]
+size = Vector2(15, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0n0c7"]
+size = Vector2(1280, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1votg"]
+size = Vector2(1280, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jduuu"]
+size = Vector2(64, 720)
+
+[node name="Main" type="Node2D"]
+
+[node name="Campo" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("1_h816s")
+
+[node name="LinhaDoMeio" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+scale = Vector2(0.5, 5.6)
+texture = ExtResource("2_q5sgf")
+
+[node name="Player" type="StaticBody2D" parent="."]
+position = Vector2(50, 324)
+
+[node name="ColorRect" type="ColorRect" parent="Player"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = 60.0
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(10, 0)
+shape = SubResource("RectangleShape2D_77ww1")
+
+[node name="CPU" type="StaticBody2D" parent="."]
+position = Vector2(1210, 324)
+
+[node name="ColorRect" type="ColorRect" parent="CPU"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = 60.0
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CPU"]
+position = Vector2(10, 0)
+shape = SubResource("RectangleShape2D_77ww1")
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+position = Vector2(640, 360)
+collision_mask = 3
+
+[node name="ColorRect" type="ColorRect" parent="Ball"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.5
+offset_top = -7.5
+offset_right = 7.5
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_7tfev")
+
+[node name="Borders" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="Top" type="CollisionShape2D" parent="Borders"]
+position = Vector2(640, -32)
+shape = SubResource("RectangleShape2D_0n0c7")
+
+[node name="Bottom" type="CollisionShape2D" parent="Borders"]
+position = Vector2(640, 752)
+shape = SubResource("RectangleShape2D_1votg")
+
+[node name="ScoreLeft" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreLeft"]
+position = Vector2(-32, 360)
+shape = SubResource("RectangleShape2D_jduuu")
+
+[node name="ScoreRight" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreRight"]
+position = Vector2(1312, 360)
+shape = SubResource("RectangleShape2D_jduuu")
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="PlayerScore" type="Label" parent="Hud"]
+offset_left = 448.0
+offset_top = 8.0
+offset_right = 512.0
+offset_bottom = 58.0
+theme_override_fonts/font = ExtResource("3_of7w6")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CpuScore2" type="Label" parent="Hud"]
+offset_left = 768.0
+offset_top = 8.0
+offset_right = 832.0
+offset_bottom = 58.0
+theme_override_fonts/font = ExtResource("3_of7w6")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BallTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
